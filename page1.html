@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+    <title>Title</title>
+    <script src = "js1.js"></script>
+    <link rel="stylesheet" type="text/css" href="css1.css">
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron" align="Center"  style = "background-color: cornflowerblue">
+            <h1>CRUD Operations</h1>
+            <p>Enter your employee details to add entry.</p>
+        </div>
+    </div>
+    <div class = "container" ng-app="my_app"  ng-controller="my_ctrl">
+        <form action="" >
+        <table class = "table" style="background-color: #b8a14a">
+            <tbody>
+            <tr>
+                <td>Employee Id: <input type="number" class="form-control tooltip_style"  ng-model="entry.id" placeholder="Employee id" data-toggle="tooltip" title="Enter Employee ID here" ></td>
+                <td>Employee Name <span style="color: darkred">*</span>: <input type="text" class="form-control  tooltip_style" ng-model="entry.name" placeholder="Name" data-toggle="tooltip" title="Enter Employee Name here" ></td>
+            </tr>
+            <tr>
+                <td>Employee Salary: <input type="number" class="form-control tooltip_style" ng-model="entry.sal" placeholder="Salary" data-toggle="tooltip" title="Enter Employee Salary here" ></td>
+                <td>Employee Designation: <select class="form-control tooltip_style" ng-model="entry.des" data-toggle="tooltip" title="Enter Employee Designation here" >
+                    <option value="Senior software Engg.">Senior software Engg.</option>
+                    <option value="software Engg.">Software Engg.</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Director">Director</option>
+                </select></td>
+<!--                <datalist id="designation">-->
+<!--                    <option value="Senior software Engg.">-->
+<!--                    <option value="Software Engg.">-->
+<!--                    <option value="Manager">-->
+<!--                    <option value="Director">-->
+<!--                </datalist>-->
+                <td><button type = "button" ng-click="add_entry(entry)" style="position: relative; left: 40px; top: 28px;">Add Entry</button> </td>
+            </tr>
+            </tbody>
+        </table>
+        </form>
+        <hr>
+        <table id="myTable" class = 'table table-bordered table-wrapper' style="background-color: burlywood">
+            <thead>
+                <tr style="background-color: cornflowerblue">
+                    <td> <label><input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll()" />Employee ID</label></td>
+                    <td>Employee Name</td>
+                    <td>Employee Salary</td>
+                    <td>Employee Designation</td>
+                    <td>Edit/Save</td>
+                    <td>Delete</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entry in entries">
+                    <td><span><label for="chkCustomer_{{entry.id}}">
+                        <input id="chkCustomer_{{entry.id}}" type="checkbox" ng-model="entry.Selected" ng-change="CheckUncheckHeader()" />{{entry.id}}</label></span>
+<!--                        <input type="text" ng-show="edit_mode" ng-model="entry.id" />-->
+                    </td>
+                    <td>
+                        <span ng-hide="edit_mode">{{entry.name}}</span>
+                        <input type="text" ng-show="edit_mode" ng-model="entry.name" />
+                    </td>
+                    <td>
+                        <span ng-hide="edit_mode">{{entry.sal}}</span>
+                        <input type="text" ng-show="edit_mode" ng-model="entry.sal" />
+                    </td>
+                    <td>
+                        <span ng-hide="edit_mode">{{entry.des}}</span>
+                        <input type="text" ng-show="edit_mode" ng-model="entry.des" />
+                    </td>
+                    <td>
+                        <button ng-hide="edit_mode" ng-click="edit_mode = true; edit_entry(entry)" class="glyphicon glyphicon-edit"></button>
+                        <button class="glyphicon glyphicon-saved" ng-show="edit_mode" ng-click="edit_mode = false"></button>
+                    </td>
+                    <td>
+                        <button ng-click="remove_entry($index)" class="glyphicon glyphicon-trash"></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="button" value="Delete Selected" ng-click="Delete()" style="background-color: burlywood"/>
+        <button type="button" class="btn btn-primary btn-block"  onclick="final()" >finalize</button>
+
+    </div>
+</body>
+</html>
