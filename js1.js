@@ -1,6 +1,6 @@
 
 var app = angular.module('my_app', []);
-var id_list = [665012 , 665013 , 665014, 665015 , 665016 , 665017 , 1 , 2 , 3 , 4 , 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+var id_list = [1 , 2 , 3 , 4 , 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 var id_hash = {};
 var duplicate_id = {};
 for(var i = 0;i<id_list.length;i++){
