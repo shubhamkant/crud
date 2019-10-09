@@ -8,8 +8,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
 
-    <title>Title</title>
+    <title>CRUD</title>
     <script src = "js1.js"></script>
     <link rel="stylesheet" type="text/css" href="css1.css">
 </head>
@@ -21,48 +22,24 @@
         </div>
     </div>
     <div class = "container" ng-app="my_app"  ng-controller="my_ctrl">
-        <form action="" >
-        <table class = "table" style="background-color: #b8a14a">
-            <tbody>
-            <tr>
-                <td>Employee Id: <input type="number" class="form-control tooltip_style"  ng-model="entry.id" placeholder="Employee id" data-toggle="tooltip" title="Enter Employee ID here" ></td>
-                <td>Employee Name <span style="color: darkred">*</span>: <input type="text" class="form-control  tooltip_style" ng-model="entry.name" placeholder="Name" data-toggle="tooltip" title="Enter Employee Name here" ></td>
-            </tr>
-            <tr>
-                <td>Employee Salary: <input type="number" class="form-control tooltip_style" ng-model="entry.sal" placeholder="Salary" data-toggle="tooltip" title="Enter Employee Salary here" ></td>
-                <td>Employee Designation: <select class="form-control tooltip_style" ng-model="entry.des" data-toggle="tooltip" title="Enter Employee Designation here" >
-                    <option value="Senior software Engg.">Senior software Engg.</option>
-                    <option value="software Engg.">Software Engg.</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Director">Director</option>
-                </select></td>
-<!--                <datalist id="designation">-->
-<!--                    <option value="Senior software Engg.">-->
-<!--                    <option value="Software Engg.">-->
-<!--                    <option value="Manager">-->
-<!--                    <option value="Director">-->
-<!--                </datalist>-->
-                <td><button type = "button" ng-click="add_entry(entry)" style="position: relative; left: 40px; top: 28px;">Add Entry</button> </td>
-            </tr>
-            </tbody>
-        </table>
-        </form>
+        <input-template></input-template>
         <hr>
-        <table id="myTable" class = 'table table-bordered table-wrapper' style="background-color: burlywood">
+        <table id="myTable" ng-table="vm.tableParams" show-filter="true" class = 'table table-bordered table-wrapper' style="background-color: #b8b7ad">
             <thead>
                 <tr style="background-color: cornflowerblue">
-                    <td> <label><input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll()" />Employee ID</label></td>
+                    <td> <label><input type="checkbox" ng-model="IsAllChecked" ng-change="CheckUncheckAll()" />&emsp;Employee ID</label></td>
                     <td>Employee Name</td>
                     <td>Employee Salary</td>
                     <td>Employee Designation</td>
                     <td>Edit/Save</td>
                     <td>Delete</td>
+                    <td>View</td>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="entry in entries">
                     <td><span><label for="chkCustomer_{{entry.id}}">
-                        <input id="chkCustomer_{{entry.id}}" type="checkbox" ng-model="entry.Selected" ng-change="CheckUncheckHeader()" />{{entry.id}}</label></span>
+                        <input id="chkCustomer_{{entry.id}}" type="checkbox" ng-model="entry.Selected" ng-change="CheckUncheckHeader()" />&emsp;{{entry.id}}</label></span>
 <!--                        <input type="text" ng-show="edit_mode" ng-model="entry.id" />-->
                     </td>
                     <td>
@@ -84,12 +61,33 @@
                     <td>
                         <button ng-click="remove_entry($index)" class="glyphicon glyphicon-trash"></button>
                     </td>
+                    <td>
+                        <button type="button" data-toggle="modal" data-target="#myModal" class = "glyphicon glyphicon-zoom-in" ng-click="view_fun($index)"></button>
+                    </td>
                 </tr>
             </tbody>
         </table>
-        <input type="button" value="Delete Selected" ng-click="Delete()" style="background-color: burlywood"/>
-        <button type="button" class="btn btn-primary btn-block"  onclick="final()" >finalize</button>
+        <input type="button" value="Delete Selected" ng-click="Delete()" style="background-color: #b8b7ad"/>
+        <button type="button" class="btn btn-primary btn-block"  onclick="final() " >finalize</button>
 
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title" id="data_header"></h4>
+                </div>
+                <div class="modal-body">
+                    <p id="view_data"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 </body>
 </html>

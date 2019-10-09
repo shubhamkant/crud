@@ -1,4 +1,3 @@
-
 var app = angular.module('my_app', []);
 var id_list = [1 , 2 , 3 , 4 , 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 var id_hash = {};
@@ -6,8 +5,18 @@ var duplicate_id = {};
 for(var i = 0;i<id_list.length;i++){
     id_hash[id_list[i]] = true;
 }
+app.component("inputTemplate",{
+    templateUrl:"input_template.html",
+    bindings: { name: '=' },
+    // controller: function ($scope) {
+    //     this.$scope.add_entry = function (entry) {
+    //
+    //     }
+    // }
+});
 app.controller("my_ctrl", function ($scope) {
     $scope.entries = [];
+    //self.tableParams = new NgTableParams({}, { dataset: entries});
     $scope.add_entry = function (entry) {
         //alert(entry.name);
         if($scope.entry.name === undefined){
@@ -22,12 +31,13 @@ app.controller("my_ctrl", function ($scope) {
                 }
                 else {
                     if(check($scope.entry.name) === false){
-                        alert("please enter only alphabet in name field");
+                        alert("Please enter only alphabet in name field");
                     }
                     else {
                         duplicate_id[$scope.entry.id] = true;
                         $scope.entries.push(entry);
                         $scope.entry = {};
+//                        table.api.ajax.reload();
                     }
                 }
 //            $('#myTable1').rows().invalidate().draw()
@@ -43,14 +53,20 @@ app.controller("my_ctrl", function ($scope) {
             if(temp === true) {
                 console.log(index);
                 $scope.entries.splice(index, 1)
+               // document.getElementById("view_data").innerHTML = "hii";
             }
+        },
+        $scope.view_fun = function (index) {
+            document.getElementById("data_header").innerHTML =$scope.entries[index].name;
+            document.getElementById("view_data").innerHTML = "<div class =\"text-primary container\">Employee ID : " + $scope.entries[index].id + "</div><div class =\"text-primary container\">  Employee salary : " + $scope.entries[index].sal  + " </div><div class =\"text-primary container\"> Employee Designation : " + $scope.entries[index].des + "</div>";
+
         },
         $scope.edit_entry = function (index) {
             var temp = confirm("Do you want to Edit the entry ?");
             if(temp === true) {
                 $scope.editing = $scope.entries.indexOf(index);
             }
-        }
+        },
         $scope.CheckUncheckHeader = function () {
             $scope.IsAllChecked = true;
             for (var i = 0; i < $scope.entries.length; i++) {
@@ -58,7 +74,7 @@ app.controller("my_ctrl", function ($scope) {
                     $scope.IsAllChecked = false;
                     break;
                 }
-            };
+            }
         };
         $scope.CheckUncheckHeader();
 
@@ -80,7 +96,7 @@ app.controller("my_ctrl", function ($scope) {
             }
         };
 });
-var table = $('#myTable').DataTable;
+var table = $('#myTable').dataTable();
 function final() {
     $(document).ready(function () {
         $('#myTable').DataTable({
@@ -89,14 +105,10 @@ function final() {
     });
 }
 function check(name){
-    var regex = /^[A-Za-z]+$/
+    var regex = /^[A-Z a-z]+$/
 
-    //Validate TextBox value against the Regex.
-    var isValid = regex.test(name);
-    if (!isValid) {
-        return  false;
-    }
-    return true;
+    return regex.test(name);
+
 }
 // function check_validity(x){
 //     x.style.background = "red";
@@ -108,6 +120,7 @@ function check(name){
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
+
 //  var txt = [];
 //  var as = 13;
 //  var emp = {emp_id:as, emp_name:"as" , emp_sal:24 , emp_des:"wrgf"};

@@ -1,0 +1,28 @@
+<table class = "table" style="background-color: #b8b7ad">
+    <tbody>
+    <tr>
+        <td>Employee Id&nbsp;<span style="color: darkred">*</span>:
+            <form name="form_id">
+                <input name="input_id" type="number" class="form-control tooltip_style"  ng-model="entry.id" placeholder="Employee id" data-toggle="tooltip" title="Enter Employee ID here" ng-required=true>
+                <p ng-if="!form_id.input_id.$valid" style="color: darkred">ID field cannot be empty</p>
+            </form>
+        </td>
+        <td>Employee Name&nbsp;<span style="color: darkred">*</span>:
+            <form name="form_name">
+                <input type="text" name="input_name" class="form-control  tooltip_style" ng-model="entry.name" placeholder="Name" data-toggle="tooltip" title="Enter Employee Name here" ng-required=true>
+                <p ng-if="!form_name.input_name.$valid" style="color: darkred">Name field cannot be empty</p>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>Employee Salary: <input type="number" class="form-control tooltip_style" ng-model="entry.sal" placeholder="Salary" data-toggle="tooltip" title="Enter Employee Salary here" ></td>
+        <td>Employee Designation: <select class="form-control tooltip_style" ng-model="entry.des" data-toggle="tooltip" title="Enter Employee Designation here" >
+            <option value="Senior software Engg.">Senior software Engg.</option>
+            <option value="software Engg.">Software Engg.</option>
+            <option value="Manager">Manager</option>
+            <option value="Director">Director</option>
+        </select></td>
+        <td><button type = "button" ng-click="add_entry(entry)" style="position: relative; left: 40px; top: 28px;">Add Entry</button> </td>
+    </tr>
+    </tbody>
+</table>
